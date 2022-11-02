@@ -4,7 +4,7 @@ Created on Sun Oct 30 11:56:17 2022
 
 @author: Landon, Alvin, Aidan
 """
-
+visited = set()
 # graph 1
 g = {
     'A': set(['B', 'E', 'F']),
@@ -38,6 +38,7 @@ def bfs(graph, start):
             p.append(vertex)
             queue.extend(graph[vertex] - visited)
     return p
+
 # BFS paths
 
 
@@ -57,17 +58,17 @@ def bfs_path(graph, start, goal):
             queue.append((neighbor, path + [current]))
             visited.add(neighbor)
     return None
+
 # DFS
 
 
-def dfs(graph, start):
-    visited, stack = set(), [start]
-    while stack:
-        vertex = stack.pop()
-        if vertex not in visited:
-            visited.add(vertex)
-            stack.extend(graph[vertex] - visited)
-    return visited
+def dfs(visited, graph, node):  # function for dfs
+    if node not in visited:
+        print("'"+node + "', ", end="")
+        visited.add(node)
+        for neighbour in graph[node]:
+            dfs(visited, graph, neighbour)
+
 # DFS paths
 
 
@@ -93,21 +94,22 @@ print(v)
 v = bfs(g, 'D')
 print("BFS start at D")
 print(v)
-
-# DFS not working properly for me
 # Start at A, DFS
-#v = dfs(g, 'A')
-#print("DFS start at A")
-# print(v)
+print("\nDFS start at A")
+print("{", end="")
+v = dfs(visited, g, 'A')
+print("}")
 # Start at D, DFS
-#v = dfs(g, 'D')
-#print("DFS start at D")
-# print(v)
+visited = set()
+print("\nDFS start at D")
+print("{", end="")
+d = dfs(visited, g, 'D')
+print("}")
 
 # 1b
 # BFS path from A to G
 v = list(bfs_path(g, 'A', 'G'))
-print("BFS path from A to G")
+print("\nBFS path from A to G")
 print(v)
 # DFS path from A to G
 v = list(dfs_path(g, 'A', 'G'))
@@ -117,7 +119,7 @@ print(v)
 # 1c
 # BFS path from A to B
 v = list(bfs_path(g, 'A', 'B'))
-print("BFS path from A to B")
+print("\nBFS path from A to B")
 print(v)
 # DFS path from A to B
 v = list(dfs_path(g, 'A', 'B'))
