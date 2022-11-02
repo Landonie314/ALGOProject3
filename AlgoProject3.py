@@ -88,6 +88,7 @@ def dfs_path(graph, start, goal):
 # 1a
 # Start at A, BFS
 v = bfs(g, 'A')
+print("1a")
 print("BFS start at A")
 print(v)
 # Start at D, BFS
@@ -95,21 +96,22 @@ v = bfs(g, 'D')
 print("BFS start at D")
 print(v)
 # Start at A, DFS
-print("\nDFS start at A")
+print("DFS start at A")
 print("{", end="")
 v = dfs(visited, g, 'A')
 print("}")
 # Start at D, DFS
 visited = set()
-print("\nDFS start at D")
+print("DFS start at D")
 print("{", end="")
 d = dfs(visited, g, 'D')
 print("}")
 
 # 1b
 # BFS path from A to G
+print("\n1b")
 v = list(bfs_path(g, 'A', 'G'))
-print("\nBFS path from A to G")
+print("BFS path from A to G")
 print(v)
 # DFS path from A to G
 v = list(dfs_path(g, 'A', 'G'))
@@ -118,8 +120,9 @@ print(v)
 
 # 1c
 # BFS path from A to B
+print("\n1c")
 v = list(bfs_path(g, 'A', 'B'))
-print("\nBFS path from A to B")
+print("BFS path from A to B")
 print(v)
 # DFS path from A to B
 v = list(dfs_path(g, 'A', 'B'))
