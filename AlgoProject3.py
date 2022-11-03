@@ -4,6 +4,8 @@ Created on Sun Oct 30 11:56:17 2022
 
 @author: Landon, Alvin, Aidan
 """
+import collections
+
 visited = set()
 # graph 1
 g = {
@@ -146,3 +148,78 @@ g2 = {
 }
 
 # graph 3
+
+
+class DijkstraGraph:
+    def __init__(self):
+        self.nodes = set()
+        self.edges = collections.defaultdict(list)
+        self.distances = {}
+
+    def add_node(self, value):
+        self.nodes.add(value)
+
+    def add_edge(self, from_node, to_node, distance):
+        self.edges[from_node].append(to_node)
+        self.edges[to_node].append(from_node)
+        self.distances[(from_node, to_node)] = distance
+
+
+def dijkstra(graph, initial):
+    visited = {initial: 0}
+    path = {}
+
+    nodes = set(graph.nodes)
+
+    while nodes:
+        min_node = None
+        for node in nodes:
+            if node in visited:
+                if min_node is None:
+                    min_node = node
+                elif visited[node] < visited[min_node]:
+                    min_node = node
+
+        if min_node is None:
+            break
+
+        nodes.remove(min_node)
+        current_weight = visited[min_node]
+
+        for edge in graph.edges[min_node]:
+            weight = current_weight + graph.distance[(min_node, edge)]
+            if edge not in visited or weight < visited[edge]:
+                visited[edge] = weight
+                path[edge] = min_node
+
+    return visited, path
+
+
+graph = DijkstraGraph()
+
+graph.nodes = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'}
+
+graph.edges = {'A': ['B', 'C', 'D'], 'B': ['A', 'C', 'F', 'H'],
+               'C': ['A', 'B', 'D', 'E', 'F'], 'D': ['A', 'C', 'E', 'I'],
+               'E': ['C', 'D', 'F', 'G'], 'F': ['B', 'C', 'E', 'G', 'H'],
+               'G': ['E', 'F', 'H', 'I'], 'H': ['B', 'F', 'G', 'I'],
+               'I': ['D', 'G', 'H']}
+
+graph.distance = {('A', 'B'): 22, ('A', 'C'): 9, ('A', 'D'): 12,
+                  ('B', 'A'): 22, ('B', 'C'): 35, ('B', 'F'): 36, ('B', 'H'): 34,
+                  ('C', 'A'): 9,  ('C', 'B'): 35, ('C', 'D'): 4, ('C', 'E'): 65, ('C', 'F'): 42,
+                  ('D', 'A'): 12, ('D', 'C'): 4, ('D', 'E'): 33, ('D', 'I'): 30,
+                  ('E', 'C'): 65, ('E', 'D'): 33, ('E', 'F'): 18, ('E', 'G'): 23,
+                  ('F', 'B'): 36, ('F', 'C'): 42, ('F', 'E'): 18, ('F', 'G'): 39, ('F', 'H'): 24,
+                  ('G', 'E'): 23, ('G', 'F'): 39, ('G', 'H'): 25, ('G', 'I'): 21,
+                  ('H', 'B'): 34, ('H', 'F'): 24, ('H', 'G'): 25, ('H', 'I'): 19,
+                  ('I', 'D'): 30, ('I', 'G'): 21, ('I', 'H'): 19,
+                  }
+
+# 3a
+v, path = dijkstra(graph, 'A')
+print("\n3a")
+print('Visited: ', v)
+print('Path :', path)
+
+# 3b
