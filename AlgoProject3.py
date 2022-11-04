@@ -5,10 +5,12 @@ Created on Sun Oct 30 11:56:17 2022
 @author: Landon, Alvin, Aidan
 """
 import collections
-#For Strongly Connected
+# For Strongly Connected
 import heapq
 from itertools import groupby
 from collections import defaultdict
+from collections import defaultdict
+from heapq import *
 
 visited = set()
 # graph 1
@@ -152,10 +154,12 @@ g2 = {
 }
 
 # Question 2, Strongly connected components
+
+
 class Tracker(object):
     """Keeps track of the current time, current source, component leader,
     finish time of each node and the explored nodes.
-    
+
     'self.leader' is informs of {node: leader, ...}."""
 
     def __init__(self):
@@ -200,6 +204,7 @@ def graph_reverse(graph):
             reversed_graph[head].append(tail)
     return reversed_graph
 
+
 def scc(graph):
     """First runs dfs_loop on reversed graph with nodes in decreasing order,
     then runs dfs_loop on original graph with nodes in decreasing finish
@@ -223,9 +228,11 @@ def scc(graph):
         out[lead] = list(vertex)
     return out
 
-#Prints out the result
+# Prints out the result
+
+
 def main():
-   
+
     groups = scc(g2)
     top_5 = heapq.nlargest(5, groups, key=lambda x: len(groups[x]))
     #sorted_groups = sorted(groups, key=lambda x: len(groups[x]), reverse=True)
@@ -233,7 +240,7 @@ def main():
     for i in range(5):
         try:
             result.append(len(groups[top_5[i]]))
-            #result.append(len(groups[sorted_groups[i]]))
+            # result.append(len(groups[sorted_groups[i]]))
         except:
             result.append(0)
     return result, groups
@@ -293,6 +300,29 @@ def dijkstra(graph, initial):
     return visited, path
 
 
+def prim(nodes, edges):
+    conn = defaultdict(list)
+    for n1, n2, c in edges:
+        conn[n1].append((c, n1, n2))
+        conn[n2].append((c, n2, n1))
+
+    mst = []
+    used = set([nodes[0]])
+    usable_edges = conn[nodes[0]][:]
+    heapify(usable_edges)
+
+    while usable_edges:
+        cost, n1, n2 = heappop(usable_edges)
+        if n2 not in used:
+            used.add(n2)
+            mst.append((n1, n2, cost))
+
+            for e in conn[n2]:
+                if e[2] not in used:
+                    heappush(usable_edges, e)
+    return mst
+
+
 graph = DijkstraGraph()
 
 graph.nodes = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'}
@@ -314,6 +344,19 @@ graph.distance = {('A', 'B'): 22, ('A', 'C'): 9, ('A', 'D'): 12,
                   ('I', 'D'): 30, ('I', 'G'): 21, ('I', 'H'): 19,
                   }
 
+nodes = list("ABCDEFGHI")
+edges = [('A', 'B', 22), ('A', 'C', 9), ('A', 'D', 12),
+         ('B', 'A', 22), ('B', 'C', 35), ('B', 'F', 36), ('B', 'H', 34),
+         ('C', 'A', 9),  ('C', 'B', 35), ('C',
+                                          'D', 4), ('C', 'E', 65), ('C', 'F', 42),
+         ('D', 'A', 12), ('D', 'C', 4), ('D', 'E', 33), ('D', 'I', 30),
+         ('E', 'C', 65), ('E', 'D', 33), ('E', 'F', 18), ('E', 'G', 23),
+         ('F', 'B', 36), ('F', 'C', 42), ('F',
+                                          'E', 18), ('F', 'G', 39), ('F', 'H', 24),
+         ('G', 'E', 23), ('G', 'F', 39), ('G', 'H', 25), ('G', 'I', 21),
+         ('H', 'B', 34), ('H', 'F', 24), ('H', 'G', 25), ('H', 'I', 19),
+         ('I', 'D', 30), ('I', 'G', 21), ('I', 'H', 19)]
+
 # 3a
 v, path = dijkstra(graph, 'A')
 print("\n3a")
@@ -321,3 +364,5 @@ print('Visited: ', v)
 print('Path :', path)
 
 # 3b
+print("\n3b")
+print("prim:", prim(nodes, edges))
