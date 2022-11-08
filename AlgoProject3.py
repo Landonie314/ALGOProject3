@@ -34,6 +34,7 @@ g = {
 }
 
 # BFS
+# From sample code
 
 
 def bfs(graph, start):
@@ -48,6 +49,7 @@ def bfs(graph, start):
     return p
 
 # BFS paths
+# From sample code
 
 
 def bfs_path(graph, start, goal):
@@ -68,6 +70,7 @@ def bfs_path(graph, start, goal):
     return None
 
 # DFS
+# From sample code
 
 
 def dfs(visited, graph, node):  # function for dfs
@@ -78,6 +81,7 @@ def dfs(visited, graph, node):  # function for dfs
             dfs(visited, graph, neighbour)
 
 # DFS paths
+# From sample code
 
 
 def dfs_path(graph, start, goal):
@@ -154,11 +158,13 @@ g2 = {
 }
 
 # Question 2, Strongly connected components
-#https://github.com/ChuntaoLu/Algorithms-Design-and-
-#Analysis/blob/master/week4%20Graph%20search%20and%20SCC/scc.py#L107
+# https://github.com/ChuntaoLu/Algorithms-Design-and-
+# Analysis/blob/master/week4%20Graph%20search%20and%20SCC/scc.py#L107
 
-#The original script was written in Python 2. It computes the strong
+# The original script was written in Python 2. It computes the strong
 # connected components(SCC) of a given graph.
+
+
 class Tracker(object):
     """Keeps track of the current time, current source, component leader,
     finish time of each node and the explored nodes.
@@ -257,6 +263,9 @@ for key in components:
 
 # graph 3
 
+# Dijkstra's
+# From sample code
+
 
 class DijkstraGraph:
     def __init__(self):
@@ -301,6 +310,9 @@ def dijkstra(graph, initial):
                 path[edge] = min_node
 
     return visited, path
+
+# Prim's
+# From sample code
 
 
 def prim(nodes, edges):
