@@ -154,8 +154,11 @@ g2 = {
 }
 
 # Question 2, Strongly connected components
+#https://github.com/ChuntaoLu/Algorithms-Design-and-
+#Analysis/blob/master/week4%20Graph%20search%20and%20SCC/scc.py#L107
 
-
+#The original script was written in Python 2. It computes the strong
+# connected components(SCC) of a given graph.
 class Tracker(object):
     """Keeps track of the current time, current source, component leader,
     finish time of each node and the explored nodes.
